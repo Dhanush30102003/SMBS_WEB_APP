@@ -1,0 +1,46 @@
+﻿@model SMBS_SERVER.Models.Masters.FlashSaleMaster
+
+<h2>Edit Flash Sale</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    <input type="hidden" asp-for="FlashSaleID" />
+
+    <div class="mb-3">
+        <label>Title</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Discount %</label>
+        <input asp-for="DiscountPercentage" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Start Time</label>
+        <input asp-for="StartTime" type="datetime-local" class="form-control"
+               value="@Model.StartTime.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <div class="mb-3">
+        <label>End Time</label>
+        <input asp-for="EndTime" type="datetime-local" class="form-control"
+               value="@Model.EndTime.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,85 @@
+﻿@model List<SMBS_SERVER.Models.Masters.FlashSaleMaster>
+
+@{
+    ViewData["Title"] = "Flash Sale List";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h3>🔥 Flash Sales</h3>
+        <a asp-action="Create" class="btn btn-primary">
+            + Create Flash Sale
+        </a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Discount %</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var sale in Model)
+                {
+                    <tr>
+                        <td>@sale.FlashSaleID</td>
+                        <td>@sale.Title</td>
+                        <td>@sale.DiscountPercentage %</td>
+                        <td>@sale.StartTime.ToString("dd-MM-yyyy HH:mm")</td>
+                        <td>@sale.EndTime.ToString("dd-MM-yyyy HH:mm")</td>
+                        <td>
+                            @{
+                                var now = DateTime.Now;
+                            }
+                        
+                            @if (!sale.IsActive)
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                            else if (sale.StartTime > now)
+                            {
+                                <span class="badge bg-warning text-dark">Scheduled</span>
+                            }
+                            else if (sale.StartTime <= now && sale.EndTime >= now)
+                            {
+                                <span class="badge bg-success">Running</span>
+                            }
+                            else if (sale.EndTime < now)
+                            {
+                                <span class="badge bg-danger">Expired</span>
+                            }
+                        </td>
+                        
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@sale.FlashSaleID"
+                               class="btn btn-sm btn-primary">Edit</a>
+
+                            <a asp-action="Delete" asp-route-id="@sale.FlashSaleID"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this flash sale?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No Flash Sales Found
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

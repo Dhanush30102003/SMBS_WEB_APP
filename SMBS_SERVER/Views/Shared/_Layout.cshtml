@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - SMBS Admin</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            background-color: #212529;
+            color: #fff;
+        }
+
+            #sidebar a.bg-secondary {
+                background-color: #495057 !important;
+            }
+
+            #sidebar a {
+                transition: 0.2s ease-in-out;
+            }
+
+            #sidebar h4 {
+                margin: 0;
+            }
+
+            #sidebar a {
+                display: block;
+                padding: 12px 20px;
+                color: #fff;
+                text-decoration: none;
+            }
+
+                #sidebar a:hover {
+                    background-color: #343a40;
+                }
+
+        /* Content area */
+        #content {
+            margin-left: 240px; /* SAME as sidebar width */
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <h4 class="p-3 border-bottom">SMBS Admin</h4>
+
+        <!-- DASHBOARD -->
+        <a asp-controller="Dashboard" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "bg-secondary" : "")">
+            📊 Dashboard
+        </a>
+
+        <!-- MANAGEMENT -->
+        <div class="px-3 mt-3 text-uppercase small">
+            Management
+        </div>
+
+        <a asp-controller="Employee" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Employee" ? "bg-secondary" : "")">
+            👨‍💼 Employee
+        </a>
+
+        <a asp-controller="Product" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "bg-secondary" : "")">
+            📦 Product
+        </a>
+
+        <a asp-controller="Customer" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customer" ? "bg-secondary" : "")">
+            👥 Customer
+        </a>
+
+        <a asp-controller="Inventory" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Inventory" ? "bg-secondary" : "")">
+            🏪 Inventory
+        </a>
+
+        <!-- MARKETING -->
+        <div class="px-3 mt-3 text-uppercase small ">
+            Marketing
+        </div>
+
+        <a asp-controller="FlashSale" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "FlashSale" ? "bg-secondary" : "")">
+            🔥 Flash Sale
+        </a>
+
+        <!-- REPORTS -->
+        <div class="px-3 mt-3 text-uppercase small ">
+            Reports
+        </div>
+
+        <a asp-controller="Reports" asp-action="Index"
+           class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "bg-secondary" : "")">
+            📑 Reports
+        </a>
+
+        <!-- LOGOUT -->
+        <form asp-controller="Auth" asp-action="Logout" method="post" class="p-3 mt-4">
+            <button class="btn btn-outline-light w-100">
+                🚪 Logout
+            </button>
+        </form>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="content">
+        @RenderBody()
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

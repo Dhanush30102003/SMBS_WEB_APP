@@ -1,0 +1,35 @@
+﻿@model List<SMBS_SERVER.Models.Transactions.SalesInvoice>
+
+<h2>Sales Invoice Dashboard</h2>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Invoice No</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Subtotal</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Balance</th>
+            <th>Payment</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.InvoiceNumber</td>
+                <td>@i.InvoiceDate.ToString("dd-MM-yyyy")</td>
+                <td>@i.CustomerName</td>
+                <td>@i.Subtotal</td>
+                <td>@i.TotalAmount</td>
+                <td>@i.PaidAmount</td>
+                <td>@i.BalanceAmount</td>
+                <td>@i.PaymentStatus</td>
+                <td>@i.InvoiceStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>

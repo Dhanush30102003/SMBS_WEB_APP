@@ -1,0 +1,166 @@
+﻿@model SMBS_SERVER.Models.ViewModels.ProductCreateViewModel
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+
+            <div class="card shadow-sm border-0 mt-3">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Edit Product</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Edit"
+                          asp-controller="Product"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+
+                        <!-- Hidden Product ID -->
+                        <input type="hidden" asp-for="ProductID" />
+
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <div class="row g-3">
+
+                            <!-- Product Code -->
+                            <div class="col-md-6">
+                                <label class="form-label">Product Code</label>
+                                <input asp-for="ProductCode" class="form-control" />
+                                <span asp-validation-for="ProductCode" class="text-danger"></span>
+                            </div>
+
+                            <!-- Product Name -->
+                            <div class="col-md-6">
+                                <label class="form-label">Product Name</label>
+                                <input asp-for="ProductName" class="form-control" />
+                                <span asp-validation-for="ProductName" class="text-danger"></span>
+                            </div>
+
+                            <!-- SKU -->
+                            <div class="col-md-6">
+                                <label class="form-label">SKU</label>
+                                <input asp-for="SKU" class="form-control" />
+                                <span asp-validation-for="SKU" class="text-danger"></span>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="col-md-6">
+                                <label class="form-label">Category</label>
+                                <select asp-for="CategoryID"
+                                        asp-items="Model.Categories"
+                                        class="form-select">
+                                    <option value="0">-- Select Category --</option>
+                                </select>
+                                <span asp-validation-for="CategoryID" class="text-danger"></span>
+                            </div>
+
+                            <!-- UOM -->
+                            <div class="col-md-6">
+                                <label class="form-label">UOM</label>
+                                <select asp-for="UOMID"
+                                        asp-items="Model.UOMs"
+                                        class="form-select">
+                                    <option value="0">-- Select UOM --</option>
+                                </select>
+                                <span asp-validation-for="UOMID" class="text-danger"></span>
+                            </div>
+
+                            <!-- Barcode -->
+                            <div class="col-md-6">
+                                <label class="form-label">Barcode</label>
+                                <input asp-for="Barcode" class="form-control" />
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label class="form-label">Description</label>
+                                <textarea asp-for="Description"
+                                          class="form-control"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <!-- PRICE SECTION -->
+                            <hr class="mt-4" />
+
+                            <div class="col-md-4">
+                                <label class="form-label">Selling Price</label>
+                                <input asp-for="SellingPrice" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">MRP</label>
+                                <input asp-for="MRP" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Discount %</label>
+                                <input asp-for="DiscountPercentage" class="form-control" />
+                            </div>
+
+                            <!-- IMAGE SECTION -->
+                            <hr class="mt-4" />
+
+                            <div class="col-md-6">
+                                <label class="form-label">Replace Product Image</label>
+                                <input type="file"
+                                       asp-for="ImageFile"
+                                       class="form-control" />
+                                <small class="text-muted">
+                                    Leave empty to keep existing image.
+                                </small>
+                            </div>
+
+                            <!-- Show Existing Image -->
+                            <div class="col-md-6">
+                                <label class="form-label">Current Image</label>
+                                <div>
+                                    @if (Model.ExistingImage != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(Model.ExistingImage);
+                                        var imgSrc = $"data:image/png;base64,{base64}";
+                                        <img src="@imgSrc"
+                                             width="120"
+                                             height="120"
+                                             class="border rounded shadow-sm" />
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">No Image Available</p>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <a asp-action="Index"
+                               class="btn btn-secondary px-4">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success px-4">
+                                Update Product
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

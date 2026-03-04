@@ -1,0 +1,100 @@
+﻿@model SMBS_SERVER.Models.ViewModels.SalesReportViewModel
+
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "_Layout";
+}
+
+<h3 class="mb-3">Reports</h3>
+
+<!-- FILTER CARD -->
+<form method="post"
+      asp-action="LoadReport"
+      class="card shadow-sm p-3 mb-4">
+
+    <div class="row align-items-end">
+
+        <div class="col-md-3">
+            <label class="form-label">From Date</label>
+            <input type="date"
+                   name="fromDate"
+                   class="form-control"
+                   value="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                   required />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">To Date</label>
+            <input type="date"
+                   name="toDate"
+                   class="form-control"
+                   value="@(Model.ToDate?.ToString("yyyy-MM-dd"))"
+                   required />
+        </div>
+
+        <div class="col-md-6 text-end">
+            <button type="submit"
+                    class="btn btn-primary me-2">
+                Load Report
+            </button>
+
+            <button type="submit"
+                    formaction="/Reports/Export"
+                    formmethod="post"
+                    class="btn btn-success">
+                Export Excel
+            </button>
+        </div>
+
+    </div>
+</form>
+
+<!-- SUMMARY CARDS (ALWAYS VISIBLE) -->
+<div class="row g-3 mb-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3 bg-light">
+            <small class="text-muted">Total Sales</small>
+            <h5 class="text-success mt-1">
+                ₹@Model.TotalSales.ToString("N2")
+            </h5>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3 bg-light">
+            <small class="text-muted">Total Invoices</small>
+            <h5 class="mt-1">
+                @Model.TotalInvoices
+            </h5>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3 bg-light">
+            <small class="text-muted">Avg Invoice Value</small>
+            <h5 class="text-warning mt-1">
+                ₹@Model.AvgInvoiceValue.ToString("N2")
+            </h5>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3 bg-light">
+            <small class="text-muted">Total Pending</small>
+            <h5 class="text-danger mt-1">
+                ₹@Model.TotalPending.ToString("N2")
+            </h5>
+        </div>
+    </div>
+
+</div>
+
+<!-- PLACEHOLDER / INFO TEXT -->
+@if (!Model.FromDate.HasValue || !Model.ToDate.HasValue)
+{
+    <div class="alert alert-info shadow-sm">
+        Select a <b>From Date</b> and <b>To Date</b>, then click
+        <b>Load Report</b> to view sales data.
+    </div>
+}

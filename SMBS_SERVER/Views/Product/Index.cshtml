@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SMBS_SERVER.Models.Masters.ProductMaster>
+
+<h2>Product Management</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add Product</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Barcode</th>
+            <th>Product Image</th>
+            <th>Reorder Level</th>
+            <th>Min Stock</th>
+            <th>Max Stock</th>
+            <th>Actions</th> <!-- ✅ Added -->
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.ProductCode</td>
+                <td>@p.ProductName</td>
+                <td>@p.Barcode</td>
+
+                <td>
+                    @if (p.ProductImage != null)
+                    {
+                        var base64 = Convert.ToBase64String(p.ProductImage);
+                        var imgSrc = $"data:image/png;base64,{base64}";
+                        <img src="@imgSrc" width="60" height="60" class="rounded border" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Image</span>
+                    }
+                </td>
+
+                <td>@p.ReorderLevel</td>
+                <td>@p.MinStockLevel</td>
+                <td>@p.MaxStockLevel</td>
+
+                <!-- ✅ EDIT BUTTON -->
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@p.ProductID"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

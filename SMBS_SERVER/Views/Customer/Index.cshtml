@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SMBS_SERVER.Models.Masters.CustomerMaster>
+
+@{
+    ViewData["Title"] = "Customers";
+    Layout = "_Layout";
+}
+
+<h3 class="mb-3">Customer Management</h3>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between mb-3">
+            <span class="fw-bold">Customer List</span>
+            <a asp-action="Create" class="btn btn-primary btn-sm">
+                + Add Customer
+            </a>
+        </div>
+
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Type</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.CustomerCode</td>
+                        <td>@c.CustomerName</td>
+                        <td>@c.Phone</td>
+                        <td>
+                            <span class="badge bg-secondary">@c.CustomerType</span>
+                        </td>
+
+                        <!-- STATUS TOGGLE -->
+                        <td class="text-center">
+                            <a asp-action="ToggleStatus"
+                               asp-route-id="@c.CustomerID"
+                               class="toggle-link"
+                               title="Toggle Status">
+
+                                <div class="toggle-switch @(c.IsActive ? "active" : "")">
+                                    <div class="toggle-knob"></div>
+                                </div>
+                            </a>
+
+                            <div class="status-text @(c.IsActive ? "text-success" : "text-danger")">
+                                @(c.IsActive ? "Active" : "Inactive")
+                            </div>
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td class="text-center">
+                            <a asp-action="Edit"
+                               asp-route-id="@c.CustomerID"
+                               class="btn btn-sm btn-outline-primary">
+                                Edit
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@c.CustomerID"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Deactivate this customer?')">
+                                Deactivate
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<style>
+    .toggle-link {
+        text-decoration: none;
+    }
+
+    .toggle-switch {
+        width: 46px;
+        height: 24px;
+        background-color: #dc3545;
+        border-radius: 30px;
+        position: relative;
+        transition: background-color 0.25s ease;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .toggle-switch.active {
+        background-color: #28a745;
+    }
+
+    .toggle-knob {
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: left 0.25s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .toggle-switch.active .toggle-knob {
+        left: 24px;
+    }
+
+    .status-text {
+        font-size: 11px;
+        margin-top: 4px;
+    }
+</style>

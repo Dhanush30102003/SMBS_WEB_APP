@@ -1,0 +1,42 @@
+﻿@model List<SMBS_SERVER.Models.Masters.UserMaster>
+
+<h3>Employee Management</h3>
+
+<a class="btn btn-primary mb-3" asp-action="Create">
+    ➕ Add Employee
+</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Branch</th>
+            <th>Locked</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.FullName</td>
+                <td>@emp.UserName</td>
+                <td>@emp.Email</td>
+                <td>@emp.RoleID</td>
+                <td>@emp.BranchID</td>
+                <td>@emp.IsLocked</td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@emp.UserID"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

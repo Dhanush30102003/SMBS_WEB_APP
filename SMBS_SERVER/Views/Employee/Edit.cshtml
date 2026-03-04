@@ -1,0 +1,45 @@
+﻿@model SMBS_SERVER.Models.Masters.UserMaster
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<h2>Edit Employee</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserID" />
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>User Name</label>
+        <input asp-for="UserName" class="form-control" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Phone</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Role ID</label>
+        <input asp-for="RoleID" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>
+            <input asp-for="IsActive" /> Active
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

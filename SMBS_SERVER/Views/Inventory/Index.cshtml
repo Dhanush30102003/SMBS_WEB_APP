@@ -1,0 +1,135 @@
+﻿@using SMBS_SERVER.Models.ViewModels
+@{
+    ViewData["Title"] = "Inventory Management";
+    var inventory = ViewBag.Inventory as List<InventoryListViewModel>;
+}
+
+<!-- ================= STYLES ================= -->
+<style>
+    .sticky-adjustment {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: #fff;
+        padding: 15px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .inventory-table-wrapper {
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+</style>
+
+<h2 class="mb-3">Inventory Management</h2>
+
+<!-- ================= STOCK ADJUSTMENT (STICKY) ================= -->
+<div class="sticky-adjustment">
+
+    <h5 class="mb-2">Stock Adjustment</h5>
+
+    <form asp-action="AdjustStock" method="post" class="row g-2 align-items-end">
+
+        <div class="col-md-2">
+            <label class="form-label">Product ID</label>
+            <input type="number"
+                   id="productIdInput"
+                   name="productId"
+                   class="form-control"
+                   placeholder="Click a row"
+                   readonly
+                   required />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Quantity</label>
+            <input type="number"
+                   step="0.01"
+                   name="quantity"
+                   class="form-control"
+                   placeholder="Qty"
+                   required />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label">Action</label>
+            <select name="actionType" class="form-control">
+                <option value="Add">Add Stock</option>
+                <option value="Reduce">Reduce Stock</option>
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">
+                Process
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- ================= INVENTORY TABLE ================= -->
+<div class="inventory-table-wrapper mt-3">
+
+    <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Product ID</th>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Current</th>
+                <th>Reserved</th>
+                <th>Available</th>
+                <th>Unit Price</th>
+                <th>Stock Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (inventory != null && inventory.Any())
+            {
+                foreach (var item in inventory)
+                {
+                    <tr class="inventory-row"
+                        style="cursor:pointer"
+                        data-productid="@item.ProductID">
+
+                        <td>@item.ProductID</td>
+                        <td>@item.ProductCode</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.CurrentStock</td>
+                        <td>@item.ReservedStock</td>
+                        <td>@item.AvailableStock</td>
+                        <td>₹@item.UnitPrice</td>
+                        <td>₹@item.StockValue</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center text-muted">
+                        No inventory data found
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+    document.querySelectorAll(".inventory-row").forEach(row => {
+        row.addEventListener("click", function () {
+
+            document.querySelectorAll(".inventory-row")
+                .forEach(r => r.classList.remove("table-active"));
+
+            this.classList.add("table-active");
+
+            document.getElementById("productIdInput").value =
+                this.dataset.productid;
+        });
+    });
+</script>

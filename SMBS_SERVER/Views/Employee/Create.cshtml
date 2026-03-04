@@ -1,0 +1,46 @@
+﻿@model SMBS_SERVER.Models.Masters.UserMaster
+
+<h3>Add Employee</h3>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input class="form-control" asp-for="FullName" required />
+    </div>
+
+    <div class="mb-3">
+        <label>User Name</label>
+        <input class="form-control" asp-for="UserName" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <input type="password" class="form-control" asp-for="Password" required />
+    </div>
+
+
+
+    <div class="mb-3">
+        <label>Branch ID</label>
+        <input class="form-control" asp-for="BranchID" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input class="form-control" asp-for="Email" />
+    </div>
+
+    <div class="mb-3">
+        <label>Phone</label>
+        <input class="form-control" asp-for="Phone" />
+    </div>
+
+    <div class="mb-3">
+        <label>Role ID</label>
+        <input class="form-control" asp-for="RoleID" required />
+    </div>
+
+    <button class="btn btn-success">Save</button>
+
+</form>
